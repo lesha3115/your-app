@@ -14,9 +14,6 @@ jobs:
     permissions:
       contents: write
     
-    strategy:
-      matrix:
-        arch: [arm64-v8a, armeabi-v7a]
     
     steps:
     - name: Checkout code
@@ -59,17 +56,17 @@ jobs:
       uses: actions/cache@v3
       with:
         path: .buildozer_global
-        key: buildozer-global-${{ matrix.arch }}-${{ hashFiles('buildozer.spec') }}
+        key: buildozer-global-${{ hashFiles('buildozer.spec') }}
         
     - name: Cache Buildozer directory
       uses: actions/cache@v3
       with:
         path: .buildozer
-        key: buildozer-${{ matrix.arch }}-${{ hashFiles('buildozer.spec') }}
+        key: buildozer-${{ hashFiles('buildozer.spec') }}
         
     - name: Update buildozer.spec for current architecture
       run: |
-        sed -i "s/android.archs = .*/android.archs = ${{ matrix.arch }}/" buildozer.spec
+        sed -i "s/android.archs = .*/android.archs = $/" buildozer.spec
         
     - name: Build with Buildozer
       run: |
@@ -78,7 +75,7 @@ jobs:
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: android-apk-${{ matrix.arch }}
+        name: android-apk
         path: bin/*.apk
         
     - name: Create Release
