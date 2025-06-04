@@ -23,6 +23,11 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.9'
+
+    - name: Set JAVA_HOME
+      run: |
+        echo "JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64" >> $GITHUB_ENV
+        export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
         
     - name: Install system dependencies
       run: |
