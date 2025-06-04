@@ -1,0 +1,12 @@
+# Создайте файл android-api-fix.patch
+cat > android-api-fix.patch << 'EOF'
+--- a/Configure
++++ b/Configure
+@@ -1234,7 +1234,9 @@
+     if ($target{sys_id} eq "ANDROID") {
+-        $cflags .= " -D__ANDROID_API__=$api";
++        if (!defined $ENV{__ANDROID_API__}) {
++            $cflags .= " -D__ANDROID_API__=$api";
++        }
+     }
+EOF

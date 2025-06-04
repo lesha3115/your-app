@@ -1,0 +1,7 @@
+--- a/Modules/Setup
++++ b/Modules/Setup
+@@ -335,7 +335,7 @@
+ 
+ #grp
+-grp _grpmodule.c
++#grp _grpmodule.c    # закомментируем, чтобы не собирать
