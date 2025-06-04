@@ -40,6 +40,13 @@ jobs:
         pip install --upgrade Cython==0.29.33
         pip install buildozer
         
+
+    - name: Accept Android SDK licenses
+      run: |
+        mkdir -p ~/.android
+        echo 'count=0' > ~/.android/repositories.cfg
+        yes | ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses || true
+        
     - name: Cache Buildozer global directory
       uses: actions/cache@v3
       with:
