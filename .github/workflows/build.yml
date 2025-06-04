@@ -31,12 +31,18 @@ jobs:
         pip install --upgrade Cython==0.29.33
         pip install buildozer
         
-    - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1.2.0
-      id: buildozer
-      with:
-        workdir: .
-        buildozer_version: stable
+    - name: Install Buildozer
+      run: |
+        pip install buildozer
+    
+    - name: Initialize Buildozer
+      run: |
+        buildozer init || true
+    
+    - name: Build APK
+      run: |
+        yes | buildozer android debug
+
         
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
