@@ -42,6 +42,13 @@ jobs:
     - name: Build APK
       run: |
         yes | buildozer android debug
+    
+    - name: Cache buildozer global directory
+      uses: actions/cache@v3
+      with:
+        path: ~/.buildozer
+        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
+
 
         
     - name: Upload APK artifact
