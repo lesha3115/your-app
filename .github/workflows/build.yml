@@ -64,9 +64,6 @@ jobs:
         path: .buildozer
         key: buildozer-${{ hashFiles('buildozer.spec') }}
         
-    - name: Update buildozer.spec for current architecture
-      run: |
-        sed -i "s/android.archs = .*/android.archs = $/" buildozer.spec
         
     - name: Build with Buildozer
       run: |
