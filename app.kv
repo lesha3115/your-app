@@ -1,8 +1,7 @@
 #:import dp kivy.metrics.dp
 #:import MDTopAppBar kivymd.uix.toolbar.MDTopAppBar
 
-
-# Экран авторизации
+# Login Screen
 <LoginScreen>:
     name: "login"
     MDBoxLayout:
@@ -44,41 +43,7 @@
                     height: dp(48)
                     on_release: root.show_register_dialog()
 
-
-# Виджет регистрации
-<RegisterContent@MDBoxLayout>:
-    orientation: "vertical"
-    spacing: dp(12)
-    padding: dp(36)
-    size_hint_y: None
-    height: self.minimum_height
-    MDTextField:
-        id: username
-        hint_text: "Логин"
-        size_hint_y: None
-        height: dp(48)
-    MDTextField:
-        id: email
-        hint_text: "Электронная почта"
-        size_hint_y: None
-        height: dp(48)
-    MDTextField:
-        id: password
-        hint_text: "Пароль"
-        password: True
-        size_hint_y: None
-        height: dp(48)
-    MDTextField:
-        id: confirm_password
-        hint_text: "Повторите пароль"
-        password: True
-        size_hint_y: None
-        height: dp(48)
-
-
-  
-
-# Экран главного меню с нижней навигацией
+# Main Screen with bottom navigation
 <MainScreen>:
     name: "main_screen"
     MDBoxLayout:
@@ -153,235 +118,18 @@
                         size_hint_y: None
                         height: dp(48)
                         on_release: app.logout()
-            MDBottomNavigationItem:
-                id: teaching_tab
-                name: "teaching"
-                text: "Преподавание"
-                icon: "school"
-                MDBoxLayout:
-                    orientation: "vertical"
-                    padding: dp(16)
-                    spacing: dp(12)
-                    MDLabel:
-                        text: "Список курсов для редактирования"
-                        halign: "center"
-                    MDRaisedButton:
-                        text: "Редактировать"
-                        size_hint_y: None
-                        height: dp(48)
-                        on_release: root.create_course()
-                    ScrollView:
-                        MDList:
-                            id: teacher_course_list
 
-
-# Новый экран статистики
-<StatisticsScreen>:
-    name: "statistics"
-    MDBoxLayout:
-        id: stat_box
-        orientation: "vertical"
-        padding: dp(10)
-        spacing: dp(10)
-        MDTopAppBar:
-            title: "Статистика"
-            left_action_items: [["arrow-left", lambda x: app.root.switch_to(app.root.get_screen('main_screen'))]]
-        ScrollView:
-            MDBoxLayout:
-                orientation: "vertical"
-                size_hint_y: None
-                height: self.minimum_height
-                spacing: dp(10)
-                padding: dp(10)
-                # Контейнер для трёх адаптивных круговых диаграмм с названиями
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    size_hint_y: None
-                    height: dp(200)
-                    spacing: dp(10)
-                    
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        size_hint_x: 0.33
-                        MDLabel:
-                            text: "Курс 1"
-                            halign: "center"
-                            size_hint_y: None
-                            height: dp(30)
-                        MDCard:
-                            size_hint: (1, 1)
-                            elevation: 5
-                            on_release: app.show_course_progress(1)
-                            Image:
-                                id: circular_chart_1
-                                size_hint: (1, 1)
-                    
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        size_hint_x: 0.33
-                        MDLabel:
-                            text: "Курс 2"
-                            halign: "center"
-                            size_hint_y: None
-                            height: dp(30)
-                        MDCard:
-                            size_hint: (1, 1)
-                            elevation: 5
-                            on_release: app.show_course_progress(2)
-                            Image:
-                                id: circular_chart_2
-                                size_hint: (1, 1)
-                    
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        size_hint_x: 0.33
-                        MDLabel:
-                            text: "Курс 3"
-                            halign: "center"
-                            size_hint_y: None
-                            height: dp(30)
-                        MDCard:
-                            size_hint: (1, 1)
-                            elevation: 5
-                            on_release: app.show_course_progress(3)
-                            Image:
-                                id: circular_chart_3
-                                size_hint: (1, 1)
-                
-                # Контейнер для интерактивного столбчатого графика
-                MDBoxLayout:
-                    id: bar_chart_container
-                    size_hint_y: None
-                    height: dp(300)
-<CourseProgressScreen>:
-    name: "course_progress"
-    MDBoxLayout:
-        orientation: "vertical"
-        padding: dp(20)
-        spacing: dp(20)
-        MDTopAppBar:
-            title: "Детали курса"
-            left_action_items: [["arrow-left", lambda x: app.root.switch_to(app.root.get_screen('statistics'))]]
-        MDLabel:
-            id: details_label
-            text: "Подробности курса"
-            halign: "center"
-        MDRaisedButton:
-            text: "Назад"
-            on_release: app.root.current = "statistics"
-
-
-
-<TestDetailsScreen>:
-    BoxLayout:
-        id: main_container
-        orientation: 'vertical'
-        padding: dp(16)
-        spacing: dp(8)
-        
-        Label:
-            id: test_title
-            text: "Название теста"
-            font_style: 'H5'
-            size_hint_y: None
-            height: dp(40)
-            
-        Label:
-            id: question_number
-            text: "Вопрос 1 из 5"
-            size_hint_y: None
-            height: dp(30)
-            
-        MDLabel:
-            id: question_text
-            text: "Текст вопроса"
-            font_style: "H6"
-            halign: "center"
-            
-            
-        BoxLayout:
-            id: options_container
-            orientation: 'vertical'
-            size_hint_y: 1
-            
-        BoxLayout:
-            size_hint_y: None
-            height: dp(48)
-            spacing: dp(8)
-            
-            MDRaisedButton:
-                text: "Назад"
-                on_release: root.prev_question()
-                
-            MDRaisedButton:
-                text: "Далее"
-                on_release: root.next_question()
-                
-            MDRaisedButton:
-                text: "Завершить"
-                on_release: root.finish_test()
-
-
-<ResultScreen>:
-    BoxLayout:
-        orientation: "vertical"
-        
-        MDTopAppBar:
-            title: "Результаты теста"
-            elevation: 10
-            left_action_items: [["arrow-left", lambda x: root.go_back()]]
-            md_bg_color: app.theme_cls.primary_color
-            
-        BoxLayout:
-            orientation: "vertical"
-            padding: "16dp"
-            spacing: "16dp"
-            
-            MDLabel:
-                text: "Тест завершен!"
-                font_style: "H5"
-                halign: "center"
-                
-            MDLabel:
-                id: score_label
-                text: "Ваш результат: 0 из 0"
-                font_style: "H6"
-                halign: "center"
-                
-            MDLabel:
-                id: percentage_label
-                text: "Процент правильных ответов: 0%"
-                font_style: "Body1"
-                halign: "center"
-                
-            MDLabel:
-                id: grade_label
-                text: "Оценка: -"
-                font_style: "H6"
-                halign: "center"
-                
-            Widget:
-                size_hint_y: 0.5
-                
-            MDRaisedButton:
-                text: "Вернуться к курсам"
-                on_release: root.manager.current = 'main_screen'
-                pos_hint: {"center_x": 0.5}
-                md_bg_color: app.theme_cls.primary_color
-
-
+# Course Details Screen
 <CourseDetailsScreen>:
     name: "course_details"
     MDBoxLayout:
         orientation: "vertical"
         spacing: dp(10)
         padding: dp(10)
-
         MDTopAppBar:
             title: "Детали курса"
             left_action_items: [["arrow-left", lambda x: setattr(app.root, 'current', 'main_screen')]]
             elevation: 10
-
         ScrollView:
             MDBoxLayout:
                 orientation: "vertical"
@@ -389,7 +137,6 @@
                 padding: dp(20)
                 size_hint_y: None
                 height: self.minimum_height
-
                 MDLabel:
                     id: course_title_label
                     text: "Название курса"
@@ -398,7 +145,6 @@
                     theme_text_color: "Primary"
                     size_hint_y: None
                     height: self.texture_size[1] + dp(10)
-
                 MDLabel:
                     id: course_description_label
                     text: "Описание курса"
@@ -407,7 +153,6 @@
                     theme_text_color: "Secondary"
                     size_hint_y: None
                     height: self.texture_size[1] + dp(10)
-
                 MDLabel:
                     text: "Разделы курса:"
                     halign: "center"
@@ -415,123 +160,34 @@
                     theme_text_color: "Primary"
                     size_hint_y: None
                     height: self.texture_size[1] + dp(10)
-
-                MDBoxLayout:
-                    orientation: "vertical"
+                MDList:
                     id: chapters_list
-                    spacing: dp(20)
-                    padding: dp(15)
-                    size_hint_y: None
-                    height: self.minimum_height
 
-        MDRaisedButton:
-            text: "Начать курс"
-            size_hint_y: None
-            height: dp(56)
-            pos_hint: {"center_x": 0.5}
-            on_release: app.root.current = "course_content"
-
-<CourseInfoScreen>:
-    name: "course_info"
-    MDBoxLayout:
-        orientation: "vertical"
-
-        MDTopAppBar:
-            title: "Детали курса (Информация)"
-            left_action_items: [["arrow-left", lambda x: setattr(app.root, "current", "teacher_main")]]
-            right_action_items: [["pencil", lambda x: root.go_to_edit()]]
-            elevation: 10
-
-        MDBoxLayout:
-            orientation: "vertical"
-            padding: dp(16)
-            spacing: dp(16)
-            MDLabel:
-                id: info_title
-                text: "Название курса"
-                halign: "center"
-            MDLabel:
-                id: info_description
-                text: "Описание курса"
-                halign: "center"
-            MDLabel:
-                id: info_status
-                text: "Статус курса"
-                halign: "center"
-
-<CourseEditContent>:
-     # Сам контейнер, отвечающий за расположение
-    orientation: "vertical"
-    # size_hint_y: None и height: self.minimum_height
-    # не нужны, если внутри ScrollView
-    spacing: dp(10)
-
-    ScrollView:
-        do_scroll_y: True
-        bar_width: dp(10)
-        MDBoxLayout:
-            orientation: "vertical"
-            spacing: dp(10)
-            size_hint_y: None
-            height: self.minimum_height
-
-            MDTextField:
-                id: edit_title
-                hint_text: "Название курса"
-                text: root.course.title if root.course else ""
-
-            MDTextField:
-                id: edit_description
-                hint_text: "Описание курса"
-                text: root.course.description if root.course else ""
-
-            MDTextField:
-                id: edit_status
-                hint_text: "Статус курса"
-                text: root.course.status if root.course else ""
-
-
-<CourseChaptersScreen>:
-    name: "course_chapters"
-    BoxLayout:
-        orientation: "vertical"
-        MDTopAppBar:
-            title: "Разделы курса"
-            left_action_items: [["arrow-left", lambda x: setattr(app.root, 'current', 'course_details')]]
-        ScrollView:
-            MDList:
-                id: chapters_list
-
-<CourseContentScreen>:
+# Chapter Content Screen - ИСПРАВЛЕНО!
+<ChapterContentScreen>:
     name: "course_content"
     BoxLayout:
         orientation: "vertical"
         MDTopAppBar:
             id: chapter_title
             title: "Содержание раздела"
-            left_action_items: [["arrow-left", lambda x: setattr(app.root, 'current', 'course_chapters')]]
+            left_action_items: [["arrow-left", lambda x: setattr(app.root, 'current', 'course_details')]]
         ScrollView:
-            MDLabel:
-                id: content_label
-                text: "Содержимое раздела"
-                halign: "center"
+            MDBoxLayout:
+                id: content_container
+                orientation: "vertical"
+                padding: dp(16)
+                spacing: dp(8)
                 size_hint_y: None
-                height: self.texture_size[1]
-        
-        MDRaisedButton:
-            text: "Пройти тест для самопроверки"
-            size_hint_y: None
-            height: dp(50)
-            on_release: setattr(app.root, 'current', 'selfcheck_test')
+                height: self.minimum_height
+                MDLabel:
+                    id: content_label
+                    text: "Содержимое раздела"
+                    halign: "left"
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-        MDRaisedButton:
-            id: next_button
-            text: "Далее"
-            size_hint_y: None
-            height: dp(50)
-            on_release: root.next_content()
-
-
+# Self Check Test Screen
 <SelfCheckTestScreen>:
     name: "selfcheck_test"
     BoxLayout:
@@ -548,5 +204,41 @@
             height: dp(50)
             on_release: root.submit_test()
 
+# Control Test Screen  
+<ControlTestScreen>:
+    name: "control_test_screen"
+    BoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Контрольный тест"
+            left_action_items: [["arrow-left", lambda x: setattr(app.root, 'current', 'main_screen')]]
+        ScrollView:
+            MDList:
+                id: question_list
+        MDRaisedButton:
+            text: "Завершить тест"
+            size_hint_y: None
+            height: dp(50)
+            on_release: root.finish_test()
 
-
+# Statistics Screen
+<StatisticsScreen>:
+    name: "statistics"
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(10)
+        MDTopAppBar:
+            title: "Статистика"
+            left_action_items: [["arrow-left", lambda x: app.root.switch_to(app.root.get_screen('main_screen'))]]
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(10)
+                padding: dp(10)
+                MDLabel:
+                    text: "Статистика обучения"
+                    halign: "center"
+                    font_style: "H5"
